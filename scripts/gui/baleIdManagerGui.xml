@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8" standalone="no" ?>
+<!--=======================================================================================================
+	BaleIdManager SCRIPT
+	Purpose:	Configure farmOwnerId for newly pressed bales
+	Author:		[F/A] derelky / Mmtrx
+	Changelog:
+	v1.0.0.0	initial by [F/A] derelky
+	v1.0.0.1	The filllevel of the baler can now be reset to 0, e.g. so you won't get a straw bale when you start with hay. The reset function is button in the GUI menu.
+				The currently active farm for which the bales are and the associated bale counter are displayed in the F1 menu.
+				In single player mode only the Farm1 counter, reset button, and baler empty button are active.
+				Problem solved that in combination with straw harvest no bale net was used
+				Added empty baler function
+				Stripped down menu with bale counter and clear baler for single player mode
+
+	v2.0.0.0	05.07.2023  (Mmtrx) adapted for FS22
+	v2.0.0.1	29.07.2023  external control (Göweil). Loaner indicator in farm list
+=======================================================================================================-->
+<GUI onOpen="onOpen" onClose="onClose" onCreate="onCreate">
+    <GuiElement type="bitmap" profile="dialogFullscreenBg" />
+	<GuiElement debugEnabled="false" type="bitmap" profile="dialogBg" size="1100px 700px" id="dialogElement">
+		<GuiElement type="bitmap" profile="headerBoxDocked" size="510px 40px">
+			<GuiElement type="text" profile="headerText" textOffset="0px 4px" text="Bale Id Manager" />
+		</GuiElement>
+		<!-- settings box -->
+		<GuiElement type="bitmap" profile="ingameMenuSettingsBox" position="40px -40px" id="settings" size="400px 620px" >
+			<GuiElement type="boxLayout" profile="ingameMenuSettingsLayout" position="0px 0px" id="boxLayout" >
+			<!-- contractor settings box toolTipElementId="helpBoxText" -->
+				<GuiElement type="checkedOption" profile="myMultiText" onClick="onClickContractorChange" id="setContractorstate" toolTipText="" >
+					<GuiElement type="button" profile="multiTextOptionLeft"/>
+					<GuiElement type="button" profile="multiTextOptionRight"/>
+					<GuiElement type="text" profile="multiTextOptionText"/>
+					<GuiElement type="text" profile="multiTextOptionTitle" text="$l10n_BaleIdUseContract"/>
+					<GuiElement type="bitmap" profile="multiTextOptionBg"/>
+				</GuiElement>
+
+			<!-- farmId settings box -->
+				<GuiElement type="multiTextOption" profile="myMultiText" onClick="onClickFarmIDChange" id="setFarmIDChange" toolTipText="" >
+					<GuiElement type="button" profile="multiTextOptionLeft"/>
+					<GuiElement type="button" profile="multiTextOptionRight"/>
+					<GuiElement type="text" profile="multiTextOptionText"/>
+					<GuiElement type="text" profile="multiTextOptionTitle" text="$l10n_BaleIdCfarmchoose"/>
+					<GuiElement type="bitmap" profile="multiTextOptionBg"/>
+				</GuiElement>
+			<!-- vehicleImage -->
+				<GuiElement type="empty" profile="myContainer" size="360px 360px" position="20px 0px" >
+					<GuiElement type="text" profile="multiTextOptionTitle" size="360px 40px" position="8px -40px" id="vehiclename" />
+					<GuiElement type="bitmap" profile="baseReference" size="360px 360px" position="0px 0px" imageUVs="0 0 1 1" id="vehicleImage" />
+				</GuiElement>
+			<!-- baler filltype and level: alignmentX="left" alignmentY="middle"-->
+    			<GuiElement type="empty" profile="emptyPanel" size="380px 48px" >
+					<GuiElement type="text" profile="blueText" size="60px 48px" textAutoWidth="true" position="0px -6px" text="$l10n_Filllevel" />
+					<GuiElement type="text" profile="textDefault" size="60px 48px" textAutoWidth="true" position="100px -6px" textColor="" id="balefilllevel" />
+					<GuiElement type="button" profile="myButton" position="-20px -6px" anchors="1 1 1 1" onClick="onClickclearbaler" >
+						<GuiElement type="text" profile="myDynamicText" text="$l10n_Resetbalefill"/>
+					</GuiElement>
+				</GuiElement>
+			</GuiElement>
+		</GuiElement>
+
+		<GuiElement type="empty" positionOrigin="topLeft" profile="emptyPanel" position="-70px -100px" size="360px 500px" anchors="1 1 1 1" debugEnabled="false" >
+			<!-- header: anchor topLeft -->
+			<GuiElement type="text" profile="ingameMenuFrameHeaderText" anchors="0 0 1 1" position="0px 40px" size="356px 40px" textSize="22px" text="$l10n_FarmBaleCounter" />
+
+			<!-- table container: anchors="1 1 1 1" topRight-->
+			<GuiElement type="empty" positionOrigin="topLeft" id="container" profile="myContainer" debugEnabled="false" >
+				<!-- table header: -->
+				<GuiElement type="flowLayout" profile="myHeaderBox" position="0px -0px" id="baleCounterHeaderBox" >
+					<GuiElement type="tableHeader" profile="myHeaderText1" text="$l10n_ui_farm" />
+					<GuiElement type="tableHeader" profile="myHeaderText" text="$l10n_unit_bale" />
+					<GuiElement type="tableHeader" profile="myHeaderText" text="Reset" />
+				</GuiElement>
+		
+				<!-- table + slider: -->
+				<GuiElement type="empty" position="0px -40px" debugEnabled="false" >
+					<!-- table: handleFocus="false" -->
+					<GuiElement type="table" id="mTable" profile="myTable" rowTemplateName="myRowTemplate" columnNames="loaner c1 c2 c3" periodicUpdate="false" updateInterval="20" onUpdate="updateStats">
+						<GuiElement type="listItem" profile="myRow" name="myRowTemplate" >
+						<GuiElement type="bitmap" profile="myRowBg" debugEnabled="true" >
+                        	<GuiElement type="empty" profile="baseReference" size="36px 36px" iconSize="32px 32px" name="loaner" >
+                            	<GuiElement type="bitmap" profile="ingameMenuPriceArrowClimbing" />
+                        	</GuiElement>
+							<GuiElement type="text" profile="myCell1" name="c1" position="32px 0px" />
+							<GuiElement type="text" profile="myCell" name="c2" position="140px 0px"/>
+							<GuiElement type="button" profile="smallButton" name="c3" position="-10px 0px" onClick="onClickReset"  />
+						</GuiElement>
+						</GuiElement>
+					</GuiElement>
+				</GuiElement>
+			</GuiElement>
+		</GuiElement>
+		<!-- std bottom menu:-->
+		<GuiElement type="flowLayout" profile="buttonBoxDialog" id="buttonsPC">
+			<GuiElement type="button" profile="buttonOK" text="$l10n_button_confirm" onClick="onClickOk" id="yesButton"/>
+			<GuiElement type="button" profile="buttonBack" text="$l10n_button_back" onClick="onClickBack" id="noButton"/>
+		</GuiElement>
+	</GuiElement>
+</GUI>

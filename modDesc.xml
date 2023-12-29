@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8" standalone="no" ?>
+<modDesc descVersion="77">
+    <author>derelky, Mmtrx</author>
+    <version>2.0.0.2</version>
+    <title>
+        <en>Bale ID Manager</en>
+    </title>
+    <description>
+        <de><![CDATA[Mit dem Bale ID Manager ist es möglich, im Multiplayer für andere Farmen Ballen zu pressen ohne diesen beitreten zu müssen.
+Über ein GUI Menü (standardmäßig "K") kann die Funktion eingeschaltet werden. Nach dem Einschalten kann die FarmID ausgewählt werden, für die man die Ballen pressen möchte.
+Allerdings benötigt man Lohnerstatus, ansonsten kann die Farm nicht ausgewählt werden.
+Zusätzlich werden in diesem Menü die gepressten Ballen pro Farm angezeigt. Die Zähler können einzeln wieder zurückgesetzt werden. 
+
+Changelog 2.0.0.2
+- Kompatibel mit FS22_moreNumFarms
+
+Changelog 2.0.0.1
+- FS22 Portierung
+- Indikator für Lohnerstatus bei Liste der Farm-Zähler hinzugefüügt
+- Externe Bedienung für stationäre Pressen 
+
+Changelog 1.0.0.1
+-Der Füllstand der Presse kann nun auf 0 gesetzt werden, z.B. um nicht erst einen Strohballen zu bekommen, wenn man mit Heu anfängt. Dies ist im GUI Menü per Taste hinterlegt.
+-Im F1 Menü wird jederzeit die aktuell aktive Farm angezeigt, für die die Ballen sind, sowie der dazugehörige Ballenzähler.
+-Im Einzelspieler-Modus sind nur der Farm1-Zähler, Reset und die Presse-Leeren-Funktion aktiv.
+-Problem mit dem Strohbergungsaddon behoben, dass keine Netze verbraucht wurden
+-Presse leeren Funktion hinzugefügt
+-Abgespecktes Menü mit Zähler und Presse leeren für den Einzelspieler-Modus]]></de>
+        <en><![CDATA[With the Bale ID Manager it is possible to create bales for other farms without having to join them.
+You need to open a GUI Menu (default Key "K"), where you can activate the function, and select the FarmID you want to create bales for. Contractor State is necessary for selecting another FarmID.
+The Menu also displays a Balecounter for each farm, which can be reset inidividually per Farm.
+
+Changelog 2.0.0.2
+- Compatibility FS22_moreNumFarms
+
+Changelog 2.0.0.1
+- External control for stationary balers
+
+Changelog 1.0.0.1
+-The filllevel of the baler can now be reset to 0, e.g. so you won't get a straw bale when you start with hay. The reset function is button in the GUI menu.
+-The currently active farm for which the bales are and the associated bale counter are displayed in the F1 menu.
+-In single player mode only the Farm1 counter, reset button, and baler empty button are active.
+-Problem solved that in combination with straw harvest no bale net was used
+-Added empty baler function
+-Stripped down menu with bale counter and clear baler for single player mode]]></en>
+       <fr><![CDATA[Avec le Bal Id Manager il est possible en multijoueur de presser des ballot pour les autres fermes sans devoir les rejoindres.
+A travers le Menu ( touche standard K ) Vous pouvez activez la fonction. Apres l'activation vous pouvez choisir pour qui vous souhaitez presser les ballot.
+Vous devez avoir le statut de salarié sinon vous ne pouvez pas choisir d'autre ferme.
+A travers le menu vous pouvez voir le nombre de ballot presser part ferme et peut être réinitialisé individuellement.
+
+A travers le menu f1 vous voyez pour quel ferme vous pressés et le compteur a ballot.
+
+
+Changelog 1.0.0.1
+Le niveau de la Presse à balles peut également être remis à 0, par ex. pour ne pas avoir de balle de paille au début du foin. Ceci est également stocké dans le menu GUI avec un bouton.
+
+La ferme actuellement active pour laquelle les balles se trouvent et le compteur de balles associé sont affichés à tout moment dans le menu F1.
+
+En mode solo, seuls le compteur et le reset Farm1 sont actifs et la possibilité de vider la Presse à balles!
+
+Correction d'un problème avec Récolte De Paille selon lequel aucun filet n'était utilisé
+
+Ajout de la fonction presse à balles vide
+
+Menu simplifié avec compteur de balles et presse à balles transparente pour le mode solo]]></fr>
+    </description>
+    <iconFilename>icon_BaleIdManager.png</iconFilename>
+    <multiplayer supported="true"/>
+	<extraSourceFiles>
+		<sourceFile filename="scripts/RegisterSpecialization.lua" />
+		<sourceFile filename="scripts/baleIdManagerGUIloader.lua" />
+	</extraSourceFiles>
+
+	<registerSpecializations debugPriority="0">
+		<registerSpecialization name="baleidmanager" className="baleIdManager" filename="scripts/baleIdManager.lua" searchedSpecializations="Baler"/>
+	</registerSpecializations>	
+	<actions>
+		<action name="BALEID_CHANGE" 		axisType="HALF" />	</actions>
+
+	<inputBinding>	
+		<actionBinding action="BALEID_CHANGE">
+			<binding device="KB_MOUSE_DEFAULT" input="KEY_k" index="1" />
+		</actionBinding>
+	</inputBinding>
+
+	<l10n>
+		<text name="input_BALEID_CHANGE"><en>BaleIdManager: Open Menu</en><de>BaleIdManager: Menü öffnen</de><fr>BaleIdManager: Ouvrir menu</fr></text>
+		<text name="OwnFarm"><en>Own Farm</en><de>Eigene Farm</de><fr>Propre ferme</fr></text>
+		<text name="BaleIdCurrent"><en>Current bale for farm: %s</en><de>Ballen für Farm: %s</de><fr>Ballot pour la ferme: %s</fr></text>
+		<text name="BaleIdCounter1"><en>Bale count: %d</en><de>Ballenanzahl: %d</de><fr>Compteur a ballot: %d</fr></text>
+		<text name="BaleIdCfarmchoose"><en>Choose FarmID to bale for:</en><de>Ballen pressen für Farm:</de><fr>Presser des ballot pot ferme:</fr></text>
+		<text name="BaleIdUseContract"><en>Contract baling:  </en><de>Lohnpressen: </de><fr>Contrat de presse a ballot</fr></text>
+		<text name="Filllevel"><en>Filllevel:</en><de>Füllstand:</de><fr>Niveau:</fr></text>
+		<text name="FarmBaleCounter"><en>Bale counter per farm:  </en><de>Gepresste Ballen pro Farm</de><fr>Ballot presser part ferme</fr></text>
+		<text name="Resetbalefill"><en>Empty Baler</en><de>Presse leeren</de><fr>Vider la Presse</fr></text>
+		<text name="loaner"><en>Loaner</en><de>Loaner</de><fr>Loaner</fr></text>
+	</l10n>
+
+</modDesc>

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!--=====================================================================================================
+	baleIdManager GUI PROFILES
+	Purpose:     display bale counts per farm
+	Author:      Mmtrx       
+	Changelog:
+	v2.0.0.0	 01.07.2023	display bale counters for all active farms (general table)
+=======================================================================================================-->
+<GUIProfiles>
+	<Presets>
+		<Preset name="len398" value="600px 30px" />
+		<Preset name="colorTransparent" value="0 0 0 0"/>
+		<Preset name="colorMainUI" value="0.0227 0.5346 0.8519 1.0" />
+		<Preset name="colorMainUI_60" value="0.0227 0.5346 0.8519 0.6"/>
+		<Preset name="colorMainUI_10" value="0.0227 0.5346 0.8519 0.1"/>
+		<Preset name="colorMainUI_6"  value="0.0227 0.5346 0.8519 0.06"/>
+		<Preset name="colorGlass" value="0.0036 0.0056 0.0065 0.5" />
+		<Preset name="colorWhite" value="1 1 1 1" />
+		<Preset name="colorDisabled" value="0.4 0.4 0.4 1"/>
+	<!-- general table - - - - - - - - - - - - - - - - - - - - - - -  -->
+		<Preset name="container" value="360px 450px"/>	<!-- x = 3* cellSize + margin for a 3-col table -->
+		<Preset name="header" value="360px 40px"/>
+		<Preset name="tableSize" value="360px 370px"/> 	<!-- y = container - header -->
+		<Preset name="rowSize" value="360px 36px"/>
+		<Preset name="cellSize" value="110px 36px"/>
+		<Preset name="col1" value="138px 36px"/>	 	<!-- column 1 length -->
+		<Preset name="textMax" value="105px"/> 			<!-- leave 5px space before next cell -->
+		<Preset name="textMax1" value="129px"/> 		<!-- col1 - 6px offset - 5px -->
+		<Preset name="textSize" value="16px"/> 	
+	</Presets>
+
+	<!-- general table - - - - - - - - - - - - - - - - - - - - -  -->
+	<Profile name="myRow" extends="ingameMenuStatisticsRow">
+		<Value name="size" value="$preset_rowSize"/>
+	</Profile>
+	<Profile name="myRowBg" extends="ingameMenuStatisticsRowBackground">
+		<Value name="size" value="$preset_rowSize"/>
+	</Profile>
+	<Profile name="myRowBgAlt" extends="ingameMenuStatisticsRowBackgroundAlternate">
+		<Value name="size" value="$preset_rowSize"/>
+	</Profile>
+	<Profile name="myContainer" extends="ingameMenuStatisticsContainer" with="lightFrame">
+		<Value name="size" value="$preset_container"/>
+	</Profile>
+	<Profile name="myHeaderBox" extends="ingameMenuTableHeaderBox">
+		<Value name="size" value="$preset_header"/>
+	</Profile>
+	<Profile name="myTable" extends="ingameMenuStatisticsTable">
+		<Value name="size" value="$preset_tableSize"/>
+		<Value name="itemsPerCol" value="9"/>
+		<Value name="rowBackgroundProfile" value="myRowBg"/>
+		<Value name="rowBackgroundProfileAlternate" value="myRowBgAlt"/>
+	</Profile>
+	<Profile name="myHeaderText" extends="ingameMenuStatisticsTableHeader">
+		<Value name="size" value="$preset_cellSize"/>
+		<Value name="textSize" value="16px"/>
+		<Value name="textOffset" value="-7px 0px"/>
+	</Profile>
+	<Profile name="myHeaderText1" extends="myHeaderText">
+		<Value name="size" value="$preset_col1"/>
+		<Value name="textAlignment" value="left"/>
+		<Value name="textOffset" value="7px 0px"/>
+		<Value name="allowSortingDesc" value="true"/>
+		<Value name="columnName" value="c1"/>  		<!-- allow sorting on column 1 -->
+	</Profile>
+	<Profile name="myCell1" extends="myCell">
+		<Value name="size" value="$preset_col1"/>
+		<Value name="textMaxWidth" value="$preset_textMax1"/>
+		<Value name="textOffset" value="7px 0px"/>
+		<Value name="textAlignment" value="left" />
+		<Value name="textBold" value="true"/>
+	</Profile>
+	<Profile name="myCell" extends="ingameMenuStatisticsRowCell">
+		<Value name="size" value="$preset_cellSize"/>
+		<Value name="textMaxWidth" value="$preset_textMax"/>
+		<Value name="textSize" value="$preset_textSize"/>
+		<Value name="textOffset" value="-7px 0px"/>
+	</Profile>
+	<Profile name="mySlider" extends="verticalListSliderRightDocked">
+		<Value name="size" value="12px 260px"/>
+	</Profile>
+	<Profile name="mySliderBar" extends="verticalListSliderBar">
+		<Value name="size" value="6px 260px"/> 		<!-- height = table height -->
+	</Profile>
+
+	<Profile name="myMultiText" extends="multiTextOption">
+		<Value name="margin" value="42px 42px 49px 16px"/>
+	</Profile>
+	<!-- general button - - - - - - - - - - - - - - - - - - - - -  -->
+	<Profile name="myButton" extends="baseReference" >
+		<Value name="handleFocus" value="true"/>
+		<Value name="size" value="131px 45px"/>
+		<Value name="iconSize" value="0"/>
+		<Value name="iconColor" value="$preset_colorTransparent"/>
+		<Value name="imageColor" value="$preset_colorMainUI_10"/>
+		<Value name="imageFocusedColor" value="$preset_colorMainUI_60"/>
+		<Value name="imageHighlightedColor" value="$preset_colorMainUI_60"/>
+		<Value name="textAlignment" value="right"/>
+		<Value name="margin" value="0px 0px 1px 0px"/>
+	</Profile>
+	<Profile name="myButtonAlt" extends="myButton">
+		<Value name="imageColor" value="$preset_colorMainUI_6"/>
+	</Profile>
+	<Profile name="myDynamicText" extends="baseReference" with="anchorMiddleRight">
+		<Value name="position" value="-3px 0px"/>
+		<Value name="size" value="128px 38px"/>
+		<Value name="textColor" value="$preset_colorWhite"/>
+		<Value name="textHighlightedColor" value="$preset_colorWhite"/>
+		<Value name="textFocusedColor" value="$preset_colorWhite"/>
+		<Value name="textSelectedColor" value="$preset_colorWhite"/>
+		<Value name="textDisabledColor" value="$preset_colorDisabled"/>
+		<Value name="textSize" value="18px"/>
+		<Value name="textAlignment" value="center"/>
+		<Value name="textBold" value="false"/>
+	</Profile>
+	<!-- small button - - - - - - - - - - - - - - - - - - - - -  -->
+	<Profile name="smallButton" extends="wideButton" with="anchorTopRight">
+		<Value name="size" value="30px 30px"/>
+		<Value name="iconSize" value="30px 30px"/>
+		<Value name="fitExtraWidth" value="0px" />
+		<Value name="iconSelectedColor" value="$preset_colorMainUI_50"/>
+	</Profile>
+	<!-- small text - - - - - - - - - - - - - - - - - - - - - - -  -->
+	<Profile name="blueText" extends="textDefault" >
+		<Value name="textColor" value="$preset_colorMainUI"/>
+	</Profile>
+
+</GUIProfiles>
